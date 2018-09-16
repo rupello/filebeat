@@ -1,0 +1,45 @@
+Filebeat
+
+
+
+[source,bash]
+-----------------
+# install filebeat
+curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.4.0-darwin-x86_64.tar.gz\ntar xzvf filebeat-6.4.0-darwin-x86_64.tar.gz
+
+mv filebeat-6.4.0-darwin-x86_64 ~/.local
+
+export PATH=~/.local/filebeat-6.4.0-darwin-x86_64:${PATH}
+
+# test it
+filebeat -h
+
+cat filebeat.yml
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - ./logs/*.log
+
+output.elasticsearch:
+  hosts: ["localhost:9200"]
+  
+# test config
+filebeat test config
+
+# start filebeat 
+filebeat &
+
+# test
+echo "$(date),it works" >> ./logs/test.log
+
+# open kibana at http://localhost:5601
+
+# kill it
+jobs
+# > [1]  + running    filebeat
+kill %1
+docker-compose down
+
+
+-----------------
