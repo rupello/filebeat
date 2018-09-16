@@ -3,6 +3,17 @@ filebeat.inputs:
   enabled: true
   paths:
     - ./logs/*.log
+- type: log
+  enabled: true
+  paths:
+    - /var/log/system.log
+- type: log
+  enabled: true
+  paths:
+    - ./logs/*.json
+  json:
+    keys_under_root: true
+
 
 output.elasticsearch:
   hosts: ["localhost:9200"]
